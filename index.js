@@ -1,15 +1,15 @@
 require('dotenv').config()
-import express, { json } from 'express';
-import cors from 'cors';
+const express = require('express');
+const cors = require('cors');
 const app = express()
-import { MongoClient, ServerApiVersion, ObjectId } from 'mongodb';
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 
 const port = process.env.PORT || 5000
 
 //using middleware
 app.use(cors())
-app.use(json())
+app.use(express.json())
 
 
 
@@ -21,7 +21,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 async function run() {
     try {
-        // const categoryCollection = client.db('bookish').collection('category');
+        const categoryCollection = client.db('pc-builder').collection('category');
         // const productsCollection = client.db('bookish').collection('products');
         // const bookingsCollection = client.db('bookish').collection('bookings');
         // const paymentsCollection = client.db('bookish').collection('payments');
@@ -29,11 +29,11 @@ async function run() {
         // const usersCollection = client.db('bookish').collection('users');
 
 
-        // app.get('/category', async (req, res) => {
-        //     const query = {};
-        //     const category = await categoryCollection.find(query).toArray();
-        //     res.send(category)
-        // })
+        app.get('/category', async (req, res) => {
+            const query = {};
+            const category = await categoryCollection.find(query).toArray();
+            res.send(category)
+        })
 
         // app.get('/category/:id', verifyJWt, async (req, res) => {
         //     const id = req.params.id;
